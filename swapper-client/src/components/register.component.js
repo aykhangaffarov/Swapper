@@ -47,6 +47,8 @@ const vpassword = (value) => {
   }
 };
 
+
+
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -54,11 +56,26 @@ class Register extends Component {
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
+    this.onChangePhoneNumber = this.onChangePhoneNumber.bind(this);
+    this.onChangeStreet = this.onChangeStreet.bind(this);
+    this.onChangeCity = this.onChangeCity.bind(this);
+    this.onChangeState = this.onChangeState.bind(this);
+    this.onChangePostalCode = this.onChangePostalCode.bind(this);
+    this.onChangeCountry = this.onChangeCountry.bind(this);
+
 
     this.state = {
       username: "",
       email: "",
       password: "",
+      phoneNumber: "",
+      contact: {
+        street: "",
+        city: "",
+        state: "",
+        postalCode: "",
+        country: ""
+      },
       successful: false,
     };
   }
@@ -80,6 +97,36 @@ class Register extends Component {
       password: e.target.value,
     });
   }
+  onChangePhoneNumber(e) {
+    this.setState({
+      phoneNumber: e.target.value,
+    });
+  }
+  onChangeStreet(e) {
+    this.setState({ 
+      contact: { ...this.state.contact, street: e.target.value
+      } });
+  }
+  onChangeCity(e) {
+    this.setState({ 
+      contact: { ...this.state.contact, city: e.target.value
+      } });
+  }
+  onChangeState(e) {
+    this.setState({ 
+      contact: { ...this.state.contact, state: e.target.value
+      } });
+  }
+  onChangePostalCode(e) {
+    this.setState({ 
+      contact: { ...this.state.contact, postalCode: e.target.value
+      } });
+  }
+  onChangeCountry(e) {
+    this.setState({ 
+      contact: { ...this.state.contact, country: e.target.value
+      } });
+  }
 
   handleRegister(e) {
     e.preventDefault();
@@ -93,7 +140,8 @@ class Register extends Component {
     if (this.checkBtn.context._errors.length === 0) {
       this.props
         .dispatch(
-          register(this.state.username, this.state.email, this.state.password)
+          register(this.state.username, this.state.email, this.state.password, 
+                  this.state.phoneNumber, this.state.contact)
         )
         .then(() => {
           this.setState({
@@ -163,7 +211,73 @@ class Register extends Component {
                     validations={[required, vpassword]}
                   />
                 </div>
+                <h5>Contact Details</h5>
+                <div className="form-group">
+                  <label htmlFor="phoneNumber">Phone Number</label>
+                  <Input
+                    className="form-control"
+                    name="phoneNumber"
+                    value={this.state.phoneNumber}
+                    onChange={this.onChangePhoneNumber}
+                    validations={[required]}
+                  />
+                </div>
 
+                <div className="form-group">
+                  <label htmlFor="street">Street</label>
+                  <Input
+                    className="form-control"
+                    name="street"
+                    value={this.state.contact.street}
+                    onChange={this.onChangeStreet}
+                    validations={[required]}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="city">City</label>
+                  <Input
+                    className="form-control"
+                    name="city"
+                    value={this.state.contact.city}
+                    onChange={this.onChangeCity}
+                    validations={[required]}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="state">State</label>
+                  <Input
+                    className="form-control"
+                    name="state"
+                    value={this.state.contact.state}
+                    onChange={this.onChangeState}
+                    validations={[]}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="postalCode">Postal Code</label>
+                  <Input
+                    type="number"
+                    className="form-control"
+                    name="postalCode"
+                    value={this.state.contact.postalCode}
+                    onChange={this.onChangePostalCode}
+                    validations={[required]}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="country">Country</label>
+                  <Input
+                    className="form-control"
+                    name="country"
+                    value={this.state.contact.country}
+                    onChange={this.onChangeCountry}
+                    validations={[required]}
+                  />
+                </div>
                 <div className="form-group">
                   <button className="btn btn-primary btn-block">Sign Up</button>
                 </div>
