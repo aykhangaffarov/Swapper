@@ -1,10 +1,16 @@
 import { combineReducers } from "redux";
 import auth from "./auth";
 import message from "./message";
-import perfumeReducer from './perfume-reducer';
+import shop from './shop.reducer';
+import {brandFilterReducer} from "./brand.filter.reducer";
+import {orderByPriceReducer} from "./orderByPrice.filter.reducer";
+import {paginationReducer} from "./pagination.reducer";
 
 export default combineReducers({
   auth,
   message,
-  perfume:perfumeReducer
+  shop,
+  brandFilter: brandFilterReducer,
+  orderBy: orderByPriceReducer,
+  pagination: paginationReducer
 });
