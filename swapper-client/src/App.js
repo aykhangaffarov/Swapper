@@ -15,7 +15,6 @@ import BoardAdmin from "./components/board-admin.component";
 
 import { logout } from "./actions/auth";
 import { clearMessage } from "./actions/message";
-import Menus from "./containers/Menu/Menu";
 import { history } from './helpers/history';
 import 'react-app-polyfill/stable';
 class App extends Component {
@@ -74,13 +73,6 @@ class App extends Component {
                   </Link>
                 </li>
               )}
-               {showModeratorBoard && (
-                <li className="nav-item">
-                  <Link to={"/menu"} className="nav-link">
-                    Menu
-                  </Link>
-                </li>
-              )}
 
               {showAdminBoard && (
                 <li className="nav-item">
@@ -135,7 +127,6 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/profile" component={Profile} />
-              <Route exact path="/menu" component={Menus}/>
               <Route path="/user" component={BoardUser} />
               <Route path="/mod" component={BoardModerator} />
               <Route path="/admin" component={BoardAdmin} />
