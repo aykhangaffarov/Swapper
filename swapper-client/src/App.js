@@ -17,7 +17,7 @@ import { logout } from "./actions/auth";
 import { clearMessage } from "./actions/message";
 import { history } from './helpers/history';
 import 'react-app-polyfill/stable';
-import ItemList from "./containers/ItemList/ItemList";
+import ItemsMenu from './pages/ItemsMenu/ItemsMenu';
 class App extends Component {
   constructor(props) {
     super(props);
@@ -134,7 +134,7 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/profile" component={Profile} />
-              <Route exact path="/items" component={ItemList} />
+              <Route exact path="/items" component={ItemsMenu} />
               <Route path="/user" component={BoardUser} />
               <Route path="/mod" component={BoardModerator} />
               <Route path="/admin" component={BoardAdmin} />

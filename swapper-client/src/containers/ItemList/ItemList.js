@@ -1,73 +1,50 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Item from '../../components/Item/Item';
-import '../../components/Item/Item.css';
+import './ItemList.css';
+import * as actions from '../../actions/index';
+import categoryFilter from '../../pipes/categoryFilter';
 class ItemList extends Component {
     // constructor(props) {
     //     super(props);
     //     this.state = {...}
     // }
-    state = {
-        
-    }
 
     componentDidMount () {
-        console.log(this.props); 
-    }
-
-    updatePurchaseState ( ingredients ) {
-        const sum = Object.keys( ingredients )
-            .map( igKey => {
-                return ingredients[igKey];
-            } )
-            .reduce( ( sum, el ) => {
-                return sum + el;
-            }, 0 );
-        return sum > 0;
-    }
-
-    purchaseHandler = () => {
-        this.setState( { purchasing: true } );
-    }
-
-    purchaseCancelHandler = () => {
-        this.setState( { purchasing: false } );
-    }
-
-    purchaseContinueHandler = () => {
-        this.props.onInitPurchase();
-        this.props.history.push('/checkout');
+        this.props.onFetchItems();
     }
 
     render () {
+        let items="";
+        if ( !this.props.loading ) {
+             items = this.props.items.map( item => (
+                <Item
+                    key={item.id}
+                    name={item.name}
+                    category={item.category}
+                    description={item.description} />
+            ) )
+        }
         return (
-            <div class="wrapper">
-                <Item/>
-                <Item/>
-                <Item/>
-                <Item/>
-            </div>
-
+            <div class="itemlist-wrapper"> 
+                    {items}    
+            </div>     
         );
     }
 }
+const mapStateToProps = state => {
+    const categories = state.categoryFilter;
+    const filterByCategoryArr = categoryFilter(state.item.items, categories);
+    return {
+        items: filterByCategoryArr,
+        loading: state.item.loading
+    };
+};
 
-// const mapStateToProps = state => {
-//     return {
-//         ings: state.burgerBuilder.ingredients,
-//         price: state.burgerBuilder.totalPrice,
-//         error: state.burgerBuilder.error
-//     };
-// }
-
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         onIngredientAdded: (ingName) => dispatch(actions.addIngredient(ingName)),
-//         onIngredientRemoved: (ingName) => dispatch(actions.removeIngredient(ingName)),
-//         onInitIngredients: () => dispatch(actions.initIngredients()),
-//         onInitPurchase: () => dispatch(actions.purchaseInit())
-//     }
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler( ItemList));
-export default ItemList;
+const mapDispatchToProps = dispatch => {
+    return {
+        onFetchItems: () => dispatch( actions.fetchItems() )
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(ItemList);
+//export default ItemList;

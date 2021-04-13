@@ -1,0 +1,6 @@
+.itemlist-wrapper{
+	width: 75%;
+	display: block;
+	float: left;
+    border-left: 1px solid black;
+}
