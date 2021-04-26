@@ -8,6 +8,10 @@ class ItemService {
   getItems() {
     return axios.get(API_URL +"/", { headers: authHeader() });
   }
+
+  getMyItems(userId) {
+    return axios.get(API_URL +"/userId/"+userId, { headers: authHeader() });
+  }
 }
 
 export default new ItemService();

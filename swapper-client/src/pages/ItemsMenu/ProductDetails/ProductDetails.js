@@ -4,6 +4,7 @@ import './ProductDetails.css';
 import { connect } from "react-redux";
 import Modal from '../../../UI/Modal/Modal';
 import SwapModal from "../../../components/SwapModal/SwapModal";
+import * as actions from '../../../actions/index';
 class ProductDetails extends Component{
 
   state={
@@ -17,12 +18,22 @@ purchaseHandler = () => {
 }
 sendRequestHandler = (param) =>{
 console.log(param);
+const user = JSON.parse(localStorage.getItem("user"));
+const swapData={
+  requestedItemId:this.props.item.id,
+  requestedUserId:this.props.item.userId,
+  swapItemId:param,
+  swapUserId:user.id,
+  accepted:"false"
+}
+this.props.onSendSwapRequest(swapData);
+this.setState( { show: false } );
 }
     render(){
-        return (
+              return (
           <React.Fragment>
             <Modal show={this.state.show} modalClosed={this.purchaseCancelHandler}>
-              <SwapModal canceled={this.purchaseCancelHandler} submitted={this.sendRequestHandler}/>
+            <SwapModal myitems={this.props.myitems} canceled={this.purchaseCancelHandler} submitted={this.sendRequestHandler}/>
             </Modal>
         <div class="card">
           <div class="row">
@@ -45,7 +56,7 @@ console.log(param);
 
 
         <dl class="item-property">
-          <dt>Description</dt>
+          <dt>Description</dt> 
           <dd><p>{this.props.item.description}</p></dd>
         </dl>
         <dl class="param param-feature">
@@ -70,10 +81,18 @@ console.log(param);
 }
 const mapStateToProps = (state, props) =>  {
   
-  const item = state.item.items.find(item => item.id == props.match.params.id);
+  var item = state.item.items.find(item => item.id == props.match.params.id);
+  
   return {
-     item
+     item,
+     myitems:state.myitems.myitems,
+     loading: state.myitems.loading
   };
 };
 
-export default connect(mapStateToProps,null)(withRouter(ProductDetails));
+const mapDispatchToProps = dispatch => {
+  return {
+      onSendSwapRequest: (swapData) => dispatch( actions.sendSwap(swapData) )
+  };
+};
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(ProductDetails));
