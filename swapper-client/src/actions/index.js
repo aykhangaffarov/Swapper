@@ -22,5 +22,11 @@ export {
     sendSwap,
     sendSwapFail,
     sendSwapSuccess,
-    sendSwapStart
+    sendSwapStart,
+    deleteSwap,
+    deleteSwapFail,
+    deleteSwapSuccess,
+    fetchMyRequests,
+    fetchMyRequestsFail,
+    fetchMyRequestsSuccess
 } from './swaprequests';

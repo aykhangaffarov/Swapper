@@ -12,6 +12,7 @@ class ItemList extends Component {
 
     componentDidMount () {
         this.props.onFetchItems();
+        this.props.onFetchMyRequests();
     }
 
     render () {
@@ -44,7 +45,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchItems: () => dispatch( actions.fetchItems() )
+        onFetchItems: () => dispatch( actions.fetchItems() ),
+        onFetchMyRequests: () => dispatch( actions.fetchMyRequests())
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ItemList);

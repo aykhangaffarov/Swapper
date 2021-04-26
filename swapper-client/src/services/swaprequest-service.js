@@ -5,12 +5,16 @@ const API_URL = "/swaps";
 
 class SwapService {
   
-  getSwaps() {
-    return axios.get(API_URL +"/", { headers: authHeader() });
+  getMySwaps(data) {
+    return axios.get(API_URL +"/myrequests/"+data, { headers: authHeader() });
   }
 
   postSwapRequest(data) {
     return axios.post(API_URL +"/", data, { headers: authHeader() });
+  }
+
+  deleteSwapRequest(data) {
+    return axios.delete(API_URL +"/"+data, { headers: authHeader() });
   }
 }
 

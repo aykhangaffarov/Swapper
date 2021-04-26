@@ -5,31 +5,51 @@ import { connect } from "react-redux";
 import Modal from '../../../UI/Modal/Modal';
 import SwapModal from "../../../components/SwapModal/SwapModal";
 import * as actions from '../../../actions/index';
+import { act } from 'react-dom/test-utils';
 class ProductDetails extends Component{
 
   state={
-    show:false
+    show:false,
+    requested:false,
+    requestId:null
+  }
+  componentDidMount(){
+    if(this.props.myrequest){
+      this.setState({requested:true});
+    }
   }
   purchaseCancelHandler = () => {
     this.setState( { show: false } );
 }
-purchaseHandler = () => {
+sendrequestHandler = () => {
   this.setState( { show: true } );
 }
-sendRequestHandler = (param) =>{
-console.log(param);
-const user = JSON.parse(localStorage.getItem("user"));
-const swapData={
-  requestedItemId:this.props.item.id,
-  requestedUserId:this.props.item.userId,
-  swapItemId:param,
-  swapUserId:user.id,
-  accepted:"false"
+cancelrequestHandler = () => {
+  this.props.onDeleteSwapRequest(this.props.myrequest);
+  this.setState({requested:false});
 }
-this.props.onSendSwapRequest(swapData);
-this.setState( { show: false } );
+sendRequestHandler = (param) =>{
+  console.log(param);
+  const user = JSON.parse(localStorage.getItem("user"));
+  const swapData={
+    requestedItemId:this.props.item.id,
+    requestedUserId:this.props.item.userId,
+    swapItemId:param,
+    swapUserId:user.id,
+    accepted:"false"
+  }
+  this.props.onSendSwapRequest(swapData);
+  this.setState( { show: false } );
+  this.setState({requested: true})
 }
     render(){
+      let bt=null;
+      if(this.state.requested){
+        bt=<button onClick={this.cancelrequestHandler} class="btn btn-lg btn-primary text-uppercase"> Cancel Request </button>;
+      }
+      else{
+        bt=<button onClick={this.sendrequestHandler} class="btn btn-lg btn-primary text-uppercase"> Send Swap Request </button>;
+      }
               return (
           <React.Fragment>
             <Modal show={this.state.show} modalClosed={this.purchaseCancelHandler}>
@@ -68,8 +88,8 @@ this.setState( { show: false } );
           <dd>{this.props.item.username}</dd>
         </dl>  
           <hr/>
-          <button onClick={this.purchaseHandler} class="btn btn-lg btn-primary text-uppercase"> Send Swap Request </button>
-          <button onClick={this.purchaseHandler} class="btn btn-lg btn-outline-primary text-uppercase"> <i class="fas fa-shopping-cart"></i> Add new Item to Swap </button>
+          {bt}
+          <button onClick={this.sendrequestHandler} class="btn btn-lg btn-outline-primary text-uppercase"> <i class="fas fa-shopping-cart"></i> Add new Item to Swap </button>
         </article> 
             </aside> 
           </div> 
@@ -81,18 +101,29 @@ this.setState( { show: false } );
 }
 const mapStateToProps = (state, props) =>  {
   
-  var item = state.item.items.find(item => item.id == props.match.params.id);
-  
+  var item = state.item.items.find(item => item.id === props.match.params.id);
+  if(state.myswaprequests.myswaprequests.length>0){
+    var myrequest=state.myswaprequests.myswaprequests.find(req =>req.requestedItemId===item.id);
+    if(myrequest!=null){
+      return {
+        myrequest:myrequest,
+        item,
+        myitems:state.myitems.myitems,
+        loading: state.myitems.loading
+      };
+  }
+  }
   return {
-     item,
-     myitems:state.myitems.myitems,
-     loading: state.myitems.loading
+    item,
+    myitems:state.myitems.myitems,
+    loading: state.myitems.loading
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-      onSendSwapRequest: (swapData) => dispatch( actions.sendSwap(swapData) )
+      onSendSwapRequest: (swapData) => dispatch( actions.sendSwap(swapData) ),
+      onDeleteSwapRequest: (swapData) => dispatch(actions.deleteSwap(swapData))
   };
 };
 export default connect(mapStateToProps,mapDispatchToProps)(withRouter(ProductDetails));
