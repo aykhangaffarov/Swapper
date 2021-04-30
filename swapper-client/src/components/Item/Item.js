@@ -3,11 +3,10 @@ import './Item.css';
 import { Link } from 'react-router-dom';
 const Item = (props) => {
 
-console.log(props.id);
     return (
       <div class="center">
         <div class="property-card">
-          <Link to={`/items/${props.id}`}>
+          <Link to={props.warehouse=="0"? `/items/${props.id}` : `/warehouse/${props.id}`}>
             <div class="property-image">
               <div class="property-image-title">
                <h5>{props.category || "Others"}</h5>

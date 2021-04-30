@@ -11,8 +11,14 @@ class ItemList extends Component {
     // }
 
     componentDidMount () {
-        this.props.onFetchItems();
-        this.props.onFetchMyRequests();
+        if(this.props.warehouse=="0"){
+            this.props.onFetchItems();
+            this.props.onFetchMyRequests();
+        }
+        else{
+            this.props.onFetchWhItems();
+            this.props.onFetchMyRequests();
+        }
     }
 
     render () {
@@ -21,6 +27,7 @@ class ItemList extends Component {
              items = this.props.items.map( item => (
                 <Item
                     key={item.id}
+                    warehouse={this.props.warehouse}
                     id={item.id}
                     name={item.name}
                     category={item.category}
@@ -46,6 +53,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onFetchItems: () => dispatch( actions.fetchItems() ),
+        onFetchWhItems: () => dispatch( actions.fetchWhItems() ),
         onFetchMyRequests: () => dispatch( actions.fetchMyRequests())
     };
 };

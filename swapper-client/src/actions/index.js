@@ -2,7 +2,17 @@ export {
     fetchItems,
     fetchItemsStart,
     fetchItemsSuccess,
-    fetchItemsFail
+    fetchItemsFail,
+    fetchWhItems,
+    fetchWhItemsFail,
+    fetchWhItemsStart,
+    fetchWhItemsSuccess,
+    takeWhItemsFail,
+    takeWhItemsSuccess,
+    takeWhItems,
+    returnWhItems,
+    returnWhItemsFail,
+    returnWhItemsSuccess
 } from './items';
 
 export {
@@ -28,5 +38,5 @@ export {
     deleteSwapSuccess,
     fetchMyRequests,
     fetchMyRequestsFail,
-    fetchMyRequestsSuccess
+    fetchMyRequestsSuccess,
 } from './swaprequests';

@@ -18,6 +18,8 @@ import { clearMessage } from "./actions/message";
 import { history } from './helpers/history';
 import 'react-app-polyfill/stable';
 import ItemsMenu from './pages/ItemsMenu/ItemsMenu';
+import WarehouseMenu from "./pages/WarehouseMenu/WarehouseMenu";
+import WhItemDetails from "./pages/WhItemDetails/WhItemDetails";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -91,6 +93,13 @@ class App extends Component {
               )}
               {currentUser && (
                 <li className="nav-item">
+                  <Link to={"/warehouse"} className="nav-link">
+                    Warehouse
+                  </Link>
+                </li>
+              )}
+              {currentUser && (
+                <li className="nav-item">
                   <Link to={"/user"} className="nav-link">
                     User
                   </Link>
@@ -136,10 +145,11 @@ class App extends Component {
               <Route exact path="/profile" component={Profile} />
               <Route exact path="/items" component={ItemsMenu} />
               <Route exact path={'/items/:id'} component={ProductDetails}/>
+              <Route exact path="/warehouse" component={WarehouseMenu}/>
+              <Route exact path={'/warehouse/:id'} component={WhItemDetails}/>
               <Route path="/user" component={BoardUser} />
               <Route path="/mod" component={BoardModerator} />
               <Route path="/admin" component={BoardAdmin} />
-              
             </Switch>
           </div>
         </div>

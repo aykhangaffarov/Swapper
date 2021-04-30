@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import {withRouter} from "react-router-dom";
-import './ProductDetails.css';
+import './WhItemDetails.css';
 import { connect } from "react-redux";
-import Modal from '../../../UI/Modal/Modal';
-import SwapModal from "../../../components/SwapModal/SwapModal";
-import * as actions from '../../../actions/index';
-import { act } from 'react-dom/test-utils';
-class ProductDetails extends Component{
+import Modal from '../../UI/Modal/Modal';
+import SwapModal from "../../components/SwapModal/SwapModal";
+import * as actions from '../../actions/index';
+class WhItemDetails extends Component{
 
   state={
     show:false,
-    requested:false,
-    requestId:null
+    requested:false
   }
   componentDidMount(){
     if(this.props.myrequest){
@@ -25,35 +23,37 @@ sendrequestHandler = () => {
   this.setState( { show: true } );
 }
 cancelrequestHandler = () => {
-  this.props.onDeleteSwapRequest(this.props.myrequest);
+  this.props.onReturnItem(this.props.item.id);
   this.setState({requested:false});
 }
-sendRequestHandler = (param) =>{
-  console.log(param);
+sendRequestHandler = () =>{
   const user = JSON.parse(localStorage.getItem("user"));
-  const swapData={
-    requestedItemId:this.props.item.id,
-    requestedUserId:this.props.item.userId,
-    swapItemId:param,
-    swapUserId:user.id,
-    accepted:"false"
+  const item={
+  id:this.props.item.id,
+	name:this.props.item.name,
+	category:this.props.item.category,
+	description:this.props.item.description,
+	releaseDate:this.props.item.releaseDate,
+	userId:user.id,
+	username:user.username,
+	warehouse:0
   }
-  this.props.onSendSwapRequest(swapData);
+  this.props.onTakeItem(this.props.item.id, item);
   this.setState( { show: false } );
   this.setState({requested: true})
 }
     render(){
       let bt=null;
       if(this.state.requested){
-        bt=<button onClick={this.cancelrequestHandler} class="btn btn-lg btn-primary text-uppercase"> Cancel Request </button>;
+        bt=<button onClick={this.cancelrequestHandler} class="btn btn-lg btn-primary text-uppercase"> Return Item to WareHouse </button>;
       }
       else{
-        bt=<button onClick={this.sendrequestHandler} class="btn btn-lg btn-primary text-uppercase"> Send Swap Request </button>;
+        bt=<button onClick={this.sendrequestHandler} class="btn btn-lg btn-primary text-uppercase"> Take Item </button>;
       }
               return (
           <React.Fragment>
             <Modal show={this.state.show} modalClosed={this.purchaseCancelHandler}>
-            <SwapModal warehouse="0" myitems={this.props.myitems} canceled={this.purchaseCancelHandler} submitted={this.sendRequestHandler}/>
+            <SwapModal warehouse="1" canceled={this.purchaseCancelHandler} submitted={this.sendRequestHandler}/>
             </Modal>
         <div class="card">
           <div class="row">
@@ -89,7 +89,6 @@ sendRequestHandler = (param) =>{
         </dl>  
           <hr/>
           {bt}
-          <button onClick={this.sendrequestHandler} class="btn btn-lg btn-outline-primary text-uppercase"> <i class="fas fa-shopping-cart"></i> Add new Item to Swap </button>
         </article> 
             </aside> 
           </div> 
@@ -102,28 +101,26 @@ sendRequestHandler = (param) =>{
 const mapStateToProps = (state, props) =>  {
   
   var item = state.item.items.find(item => item.id === props.match.params.id);
-  if(state.myswaprequests.myswaprequests.length>0){
-    var myrequest=state.myswaprequests.myswaprequests.find(req =>req.requestedItemId===item.id);
+  if(state.myitems.myitems.length>0){
+    var myrequest=state.myitems.myitems.find(req =>req.id===item.id);
     if(myrequest!=null){
       return {
         myrequest:myrequest,
         item,
-        myitems:state.myitems.myitems,
         loading: state.myitems.loading
       };
   }
   }
   return {
     item,
-    myitems:state.myitems.myitems,
     loading: state.myitems.loading
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-      onSendSwapRequest: (swapData) => dispatch( actions.sendSwap(swapData) ),
-      onDeleteSwapRequest: (swapData) => dispatch(actions.deleteSwap(swapData))
+      onTakeItem: (id, item) => dispatch( actions.takeWhItems(id, item) ),
+      onReturnItem: (id) => dispatch(actions.returnWhItems(id))
   };
 };
-export default connect(mapStateToProps,mapDispatchToProps)(withRouter(ProductDetails));
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(WhItemDetails));

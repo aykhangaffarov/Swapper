@@ -15,13 +15,19 @@ class SwapModal extends Component{
     }
 
     clickHandler = () => {
-        if(this.state.selectedItemId!="0"){
-        this.props.submitted(this.state.selectedItemId);
+        if(this.props.warehouse==="0"){
+            if(this.state.selectedItemId!="0"){
+            this.props.submitted(this.state.selectedItemId);
+            }
+        }
+        else{
+            this.props.submitted();
         }
       }
     render(){
-        return(
-            <div>
+        let ss=null;
+        if(this.props.warehouse==="0"){
+            ss=(
                 <div class="dropdownModal">
                     <h2>Choose item to Swap</h2>
                     <div class="select">
@@ -33,6 +39,18 @@ class SwapModal extends Component{
                     </select>
                     </div>
                 </div>
+            );
+        }
+        else{
+            ss=(
+                <div class="dropdownModal">
+                    <h2>Do you really need this item?</h2>
+                </div>
+            );
+        }
+        return(
+            <div>
+                {ss}
                 <div class="buttonModal">
                     <button onClick={this.props.canceled} type="button" class="btn btn-secondary btn-lg">Cancel</button>
                     <button onClick={this.clickHandler}type="button" class="btn btn-primary btn-lg">Send Request</button>   

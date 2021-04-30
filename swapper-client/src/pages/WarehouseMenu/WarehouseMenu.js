@@ -3,7 +3,7 @@ import CategoryFilter from '../../components/CategoryFilter/CategoryFilter';
 import ItemList from '../../containers/ItemList/ItemList';
 import CategoryService from '../../services/category-service';
 
-class ItemsMenu extends Component{
+class WarehouseMenu extends Component{
     state ={
         categories:[]
     }
@@ -17,11 +17,12 @@ class ItemsMenu extends Component{
         return (
             <React.Fragment>
                         <CategoryFilter categories={this.state.categories}/>
-                        <ItemList warehouse="0"/>
+                        <h2>WareHouse</h2>
+                        <ItemList warehouse="1"/>
             </React.Fragment>
         );
 }
 }
 
 
-export default ItemsMenu;
+export default WarehouseMenu;
