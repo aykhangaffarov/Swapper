@@ -28,14 +28,17 @@ cancelrequestHandler = () => {
   this.props.onDeleteSwapRequest(this.props.myrequest);
   this.setState({requested:false});
 }
-sendRequestHandler = (param) =>{
+sendRequestHandler = (param, nameparam) =>{
   console.log(param);
   const user = JSON.parse(localStorage.getItem("user"));
   const swapData={
     requestedItemId:this.props.item.id,
+    requestedItemName:this.props.item.name,
     requestedUserId:this.props.item.userId,
     swapItemId:param,
+    swapItemName:nameparam,
     swapUserId:user.id,
+    swapUserName:user.username,
     accepted:"false"
   }
   this.props.onSendSwapRequest(swapData);

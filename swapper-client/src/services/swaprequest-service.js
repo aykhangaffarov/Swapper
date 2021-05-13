@@ -9,12 +9,20 @@ class SwapService {
     return axios.get(API_URL +"/myrequests/"+data, { headers: authHeader() });
   }
 
+  getItemSwaps(data) {
+    return axios.get(API_URL +"/requesteditem/"+data, { headers: authHeader() });
+  }
+
   postSwapRequest(data) {
     return axios.post(API_URL +"/", data, { headers: authHeader() });
   }
 
   deleteSwapRequest(data) {
     return axios.delete(API_URL +"/"+data, { headers: authHeader() });
+  }
+
+  performSwapRequest(data) {
+    return axios.get(API_URL +"/confirm/"+data, { headers: authHeader() });
   }
 }
 

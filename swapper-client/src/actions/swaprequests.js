@@ -97,3 +97,100 @@ export const fetchMyRequests = () => {
           );
     };
 };
+
+
+
+
+export const fetchItemRequestsSuccess = ( itemrequests ) => {
+    return {
+        type: actionTypes.FETCH_ITEMREQUESTS_SUCCESS,
+        itemrequests: itemrequests
+    };
+};
+
+export const fetchItemRequestsFail = ( error ) => {
+    return {
+        type: actionTypes.FETCH_ITEMREQUESTS_FAIL,
+        error: error
+    };
+};
+
+
+export const fetchItemRequests = (itemId) => {
+    return dispatch => {
+        SwapService.getItemSwaps(itemId).then(
+            response => {
+                dispatch(fetchItemRequestsSuccess(response.data));
+            },
+            error => {
+                console.log('nside fetchrequestsfail------ '+error);
+                dispatch(fetchItemRequestsFail(error));
+            }
+          );
+    };
+};
+
+
+
+
+export const performItemRequestsSuccess = ( itemrequests ) => {
+    return {
+        type: actionTypes.PERFORM_ITEMREQUESTS_SUCCESS,
+        itemrequests: itemrequests
+    };
+};
+
+export const performItemRequestsFail = ( error ) => {
+    return {
+        type: actionTypes.PERFORM_ITEMREQUESTS_FAIL,
+        error: error
+    };
+};
+
+
+export const performItemRequests = (requestId) => {
+    return dispatch => {
+        SwapService.performSwapRequest(requestId).then(
+            response => {
+                console.log(response.data);
+                dispatch(performItemRequestsSuccess(response.data));
+            },
+            error => {
+                console.log('nside performrequestsfail------ '+error);
+                dispatch(performItemRequestsFail(error));
+            }
+          );
+    };
+};
+
+
+
+export const deleteItemRequestsSuccess = ( itemrequests ) => {
+    return {
+        type: actionTypes.CANCEL_ITEMREQUESTS_SUCCESS,
+        itemrequests: itemrequests
+    };
+};
+
+export const deleteItemRequestsFail = ( error ) => {
+    return {
+        type: actionTypes.CANCEL_ITEMREQUESTS_FAIL,
+        error: error
+    };
+};
+
+
+export const deleteItemRequests = (requestId) => {
+    return dispatch => {
+        SwapService.deleteSwapRequest(requestId).then(
+            response => {
+                console.log(response.data);
+                dispatch(deleteItemRequestsSuccess(requestId));
+            },
+            error => {
+                console.log('nside deleterequestsfail------ '+error);
+                dispatch(deleteItemRequestsFail(error));
+            }
+          );
+    };
+};

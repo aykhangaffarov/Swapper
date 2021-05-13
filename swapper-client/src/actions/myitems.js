@@ -38,3 +38,32 @@ export const fetchMyItems = () => {
           );
     };
 };
+
+
+
+export const addItemFail = ( error ) => {
+    return {
+        type: actionTypes.ADD_ITEM_FAIL,
+        error: error
+    };
+};
+
+export const addItemSuccess = ( myitems ) => {
+    return {
+        type: actionTypes.ADD_ITEM_SUCCESS,
+        myitems: myitems
+    };
+};
+
+export const addItem = (itemData) => {
+    return dispatch => {
+        ItemService.addItem(itemData).then(
+            response => {
+                dispatch(addItemSuccess(response.data));
+            },
+            error => {
+                dispatch(addItemFail(error));
+            }
+          );
+    };
+};

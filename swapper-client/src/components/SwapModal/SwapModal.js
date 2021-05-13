@@ -17,7 +17,7 @@ class SwapModal extends Component{
     clickHandler = () => {
         if(this.props.warehouse==="0"){
             if(this.state.selectedItemId!="0"){
-            this.props.submitted(this.state.selectedItemId);
+            this.props.submitted(this.state.selectedItemId, this.props.myitems.find(item => item.id === this.state.selectedItemId).name);
             }
         }
         else{

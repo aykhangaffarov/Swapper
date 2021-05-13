@@ -1,0 +1,23 @@
+.myitem
+
+.list-group {box-shadow: 0px 11px 23px 5px rgba(0,0,0,0.34);}
+
+.list-group-item {background-color: rgba(255,255,255,0.7); border:0;}
+
+.btn-toolbar {margin-top:10px;
+margin-left:55px;}
+
+.myitem img {
+  float:left; 
+  margin-right:15px;
+  height: 128px;
+  width: 128px;
+}
+
+/* ==== SOME BOOTSTRAP MODS/STYLING ==== */
+.myitem .btn-default {background-color: rgba(255,255,255,0.3); border-color:rgba(0,0,0,0.2);}
+.myitem .img-rounded, .btn, .label {border-radius: 6px;}
+.myitem .btn {padding: 6px 18px;}
+
+
+.active a {color:#c7ddef;}

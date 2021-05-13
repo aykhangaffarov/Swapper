@@ -19,6 +19,10 @@ class CategoryService {
         });
       return results;
   }
+
+  getCategoriesItem() {
+    return axios.get(API_URL +"/", { headers: authHeader() });
+  }
 }
 
 export default new CategoryService();

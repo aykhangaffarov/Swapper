@@ -20,7 +20,9 @@ class ItemService {
   takeWhItem(id, item) {
     return axios.put(API_URL +"/take/"+id, item, { headers: authHeader() });
   }
-
+  addItem(itemData) {
+    return axios.post(API_URL +"/", itemData, { headers: authHeader() });
+  }
 
 }
 

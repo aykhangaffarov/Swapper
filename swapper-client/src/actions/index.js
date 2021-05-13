@@ -24,7 +24,10 @@ export {
     fetchMyItems,
     fetchMyItemsStart,
     fetchMyItemsSuccess,
-    fetchMyItemsFail
+    fetchMyItemsFail,
+    addItem,
+    addItemFail,
+    addItemSuccess
 } from './myitems';
 
 export {
@@ -39,4 +42,19 @@ export {
     fetchMyRequests,
     fetchMyRequestsFail,
     fetchMyRequestsSuccess,
+    fetchItemRequestsFail,
+    fetchItemRequestsSuccess,
+    fetchItemRequests,
+    performItemRequests,
+    performItemRequestsFail,
+    performItemRequestsSuccess,
+    deleteItemRequests,
+    deleteItemRequestsFail,
+    deleteItemRequestsSuccess
 } from './swaprequests';
+
+export {
+    fetchCategories,
+    fetchCategoriesFail,
+    fetchCategoriesSuccess
+} from './categories';

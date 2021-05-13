@@ -5,6 +5,7 @@ import { Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
+import CategoryService from "./services/category-service";
 import Login from "./components/login.component";
 import Register from "./components/register.component";
 import Home from "./components/home.component";
@@ -20,6 +21,9 @@ import 'react-app-polyfill/stable';
 import ItemsMenu from './pages/ItemsMenu/ItemsMenu';
 import WarehouseMenu from "./pages/WarehouseMenu/WarehouseMenu";
 import WhItemDetails from "./pages/WhItemDetails/WhItemDetails";
+import MyItems from "./pages/MyItems/MyItems";
+import MyProductDetails from "./pages/MyProductDetails/MyProductDetails";
+import AddItem from "./pages/AddItem/AddItem";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -69,13 +73,6 @@ class App extends Component {
                 </Link>
               </li>
 
-              {showModeratorBoard && (
-                <li className="nav-item">
-                  <Link to={"/mod"} className="nav-link">
-                    Moderator Board
-                  </Link>
-                </li>
-              )}
 
               {showAdminBoard && (
                 <li className="nav-item">
@@ -100,8 +97,8 @@ class App extends Component {
               )}
               {currentUser && (
                 <li className="nav-item">
-                  <Link to={"/user"} className="nav-link">
-                    User
+                  <Link to={"/myitems"} className="nav-link">
+                    My Items
                   </Link>
                 </li>
               )}
@@ -144,8 +141,11 @@ class App extends Component {
               <Route exact path="/register" component={Register} />
               <Route exact path="/profile" component={Profile} />
               <Route exact path="/items" component={ItemsMenu} />
+              <Route exact path="/myitems" component={MyItems} />
               <Route exact path={'/items/:id'} component={ProductDetails}/>
+              <Route exact path={'/myitems/:id'} component={MyProductDetails}/>
               <Route exact path="/warehouse" component={WarehouseMenu}/>
+              <Route exact path="/addItem" component={AddItem}/>
               <Route exact path={'/warehouse/:id'} component={WhItemDetails}/>
               <Route path="/user" component={BoardUser} />
               <Route path="/mod" component={BoardModerator} />

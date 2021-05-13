@@ -5,11 +5,13 @@ import items from "./items"
 import category from './category';
 import myitems from "./myitems";
 import swapRequests from "./swaprequests";
+import categories from "./categories";
 export default combineReducers({
   auth,
   message,
   item:items,
   categoryFilter: category,
   myitems:myitems,
-  myswaprequests:swapRequests
+  myswaprequests:swapRequests,
+  categories:categories
 });
