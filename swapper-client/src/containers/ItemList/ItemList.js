@@ -31,7 +31,8 @@ class ItemList extends Component {
                     id={item.id}
                     name={item.name}
                     category={item.category}
-                    description={item.description} />
+                    description={item.description}
+                    url={item.url} />
             ) )
         }
         return (

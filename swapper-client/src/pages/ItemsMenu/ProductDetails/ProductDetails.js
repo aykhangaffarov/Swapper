@@ -14,6 +14,7 @@ class ProductDetails extends Component{
     requestId:null
   }
   componentDidMount(){
+    this.props.onFetchCurItem(this.props.match.params.id)
     if(this.props.myrequest){
       this.setState({requested:true});
     }
@@ -63,13 +64,13 @@ sendRequestHandler = (param, nameparam) =>{
             <aside class="col-sm-5 border-right">
         <article class="gallery-wrap"> 
         <div class="img-big-wrap">
-          <div> <a href="#"><img src="https://lh3.googleusercontent.com/proxy/rDH_EY1-EYN9F8EaPboGOa5EtX3CDg8IqLelGp5oeFaZXtB2S2OVAXq0S2TRNRQuWD39M3LhG9tKag1pqAcZxjItz7aTp672C-7VkQ"/></a></div>
+          <div class="imgcover"> <img src={this.props.item.url}/></div>
         </div> 
         <div class="img-small-wrap">
-          <div class="item-gallery"> <img src="https://lh3.googleusercontent.com/proxy/rDH_EY1-EYN9F8EaPboGOa5EtX3CDg8IqLelGp5oeFaZXtB2S2OVAXq0S2TRNRQuWD39M3LhG9tKag1pqAcZxjItz7aTp672C-7VkQ"/> </div>
-          <div class="item-gallery"> <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZHVjdHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80"/> </div>
-          <div class="item-gallery"> <img src="https://s9.postimg.org/tupxkvfj3/image.jpg"/> </div>
-          <div class="item-gallery"> <img src="https://s9.postimg.org/tupxkvfj3/image.jpg"/> </div>
+          <div class="item-gallery"> <img src={this.props.item.url}/> </div>
+          <div class="item-gallery"> <img src={this.props.item.url}/> </div>
+          <div class="item-gallery"> <img src={this.props.item.url}/> </div>
+          <div class="item-gallery"> <img src={this.props.item.url}/> </div>
         </div> 
         </article> 
             </aside>
@@ -104,7 +105,8 @@ sendRequestHandler = (param, nameparam) =>{
 }
 const mapStateToProps = (state, props) =>  {
   
-  var item = state.item.items.find(item => item.id === props.match.params.id);
+  //var item = state.item.items.find(item => item.id === props.match.params.id);
+  var item=state.item.curitem;
   if(state.myswaprequests.myswaprequests.length>0){
     var myrequest=state.myswaprequests.myswaprequests.find(req =>req.requestedItemId===item.id);
     if(myrequest!=null){
@@ -126,7 +128,8 @@ const mapStateToProps = (state, props) =>  {
 const mapDispatchToProps = dispatch => {
   return {
       onSendSwapRequest: (swapData) => dispatch( actions.sendSwap(swapData) ),
-      onDeleteSwapRequest: (swapData) => dispatch(actions.deleteSwap(swapData))
+      onDeleteSwapRequest: (swapData) => dispatch(actions.deleteSwap(swapData)),
+      onFetchCurItem: (itemId) => dispatch(actions.fetchAnItem(itemId))
   };
 };
 export default connect(mapStateToProps,mapDispatchToProps)(withRouter(ProductDetails));

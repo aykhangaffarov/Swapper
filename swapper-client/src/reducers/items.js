@@ -2,7 +2,8 @@ import * as actionTypes from '../actions/types';
 
 const initialState = {
     items: [],
-    loading: false
+    loading: false,
+    curitem:""
 };
 
 const updateObject = (oldObject, updatedProperties) => {
@@ -73,6 +74,29 @@ const returnWhItemsSuccess = ( state, action ) => {
 const returnWhItemsFail = ( state, action ) => {
     return updateObject( state, { loading: false } );
 };
+
+
+const fetchAnItemSuccess = ( state, action ) => {
+    return updateObject( state, {
+        curitem: action.curitem,
+        loading: false
+    } );
+};
+
+const fetchAnItemFail = ( state, action ) => {
+    return updateObject( state, { loading: false } );
+};
+
+
+const deleteItemSuccess = ( state, action ) => {
+    return updateObject( state, {
+        loading: false
+    } );
+};
+
+const deleteItemFail = ( state, action ) => {
+    return updateObject( state, { loading: false } );
+};
 const reducer = ( state = initialState, action ) => {
     switch ( action.type ) {
         case actionTypes.FETCH_ITEMS_START: return fetchItemsStart( state, action );
@@ -85,6 +109,10 @@ const reducer = ( state = initialState, action ) => {
         case actionTypes.TAKE_WHITEM_FAIL: return takeWhItemsFail( state, action );
         case actionTypes.RETURN_WHITEM_SUCCESS: return returnWhItemsSuccess( state, action );
         case actionTypes.RETURN_WHITEM_FAIL: return returnWhItemsFail( state, action );
+        case actionTypes.FETCH_ANITEM_SUCCESS: return fetchAnItemSuccess( state, action );
+        case actionTypes.FETCH_ANITEM_FAIL: return fetchAnItemFail( state, action );
+        case actionTypes.DELETE_ITEM_SUCCESS: return deleteItemSuccess( state, action );
+        case actionTypes.DELETE_ITEM_FAIL: return deleteItemFail( state, action );
         default: return state;
     }
 };

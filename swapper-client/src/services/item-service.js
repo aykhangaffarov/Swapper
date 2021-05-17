@@ -4,7 +4,12 @@ import authHeader from "./auth-header";
 const API_URL = "/items";
 
 class ItemService {
-  
+  getItem(itemid) {
+    return axios.get(API_URL +"/"+itemid, { headers: authHeader() });
+  }
+  deleteItem(itemid) {
+    return axios.delete(API_URL +"/"+itemid, { headers: authHeader() });
+  }
   getItems() {
     return axios.get(API_URL +"/", { headers: authHeader() });
   }

@@ -60,13 +60,13 @@ sendRequestHandler = () =>{
             <aside class="col-sm-5 border-right">
         <article class="gallery-wrap"> 
         <div class="img-big-wrap">
-          <div> <a href="#"><img src="https://lh3.googleusercontent.com/proxy/rDH_EY1-EYN9F8EaPboGOa5EtX3CDg8IqLelGp5oeFaZXtB2S2OVAXq0S2TRNRQuWD39M3LhG9tKag1pqAcZxjItz7aTp672C-7VkQ"/></a></div>
+          <div> <a href="#"><img src={this.props.item.url}/></a></div>
         </div> 
         <div class="img-small-wrap">
-          <div class="item-gallery"> <img src="https://lh3.googleusercontent.com/proxy/rDH_EY1-EYN9F8EaPboGOa5EtX3CDg8IqLelGp5oeFaZXtB2S2OVAXq0S2TRNRQuWD39M3LhG9tKag1pqAcZxjItz7aTp672C-7VkQ"/> </div>
-          <div class="item-gallery"> <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZHVjdHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80"/> </div>
-          <div class="item-gallery"> <img src="https://s9.postimg.org/tupxkvfj3/image.jpg"/> </div>
-          <div class="item-gallery"> <img src="https://s9.postimg.org/tupxkvfj3/image.jpg"/> </div>
+          <div class="item-gallery"> <img src={this.props.item.url}/> </div>
+          <div class="item-gallery"> <img src={this.props.item.url}/> </div>
+          <div class="item-gallery"> <img src={this.props.item.url}/> </div>
+          <div class="item-gallery"> <img src={this.props.item.url}/> </div>
         </div> 
         </article> 
             </aside>

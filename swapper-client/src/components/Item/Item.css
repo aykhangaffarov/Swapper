@@ -122,6 +122,7 @@ body
 .property-card:hover .property-image
 {
   height:18em;
+  background-size:cover;
 }
 
 .property-card:hover .property-social-icons

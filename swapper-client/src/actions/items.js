@@ -135,3 +135,61 @@ export const returnWhItems = (userId) => {
 };
 
 
+
+export const fetchAnItemSuccess = ( item ) => {
+    return {
+        type: actionTypes.FETCH_ANITEM_SUCCESS,
+        curitem: item
+    };
+};
+
+export const fetchAnItemFail = ( error ) => {
+    return {
+        type: actionTypes.FETCH_ANITEM_FAIL,
+        error: error
+    };
+};
+
+
+export const fetchAnItem = (itemid) => {
+    return dispatch => {
+        ItemService.getItem(itemid).then(
+            response => {
+                console.log(response.data)
+                dispatch(fetchAnItemSuccess(response.data));
+            },
+            error => {
+                dispatch(fetchAnItemFail(error));
+            }
+          );
+    };
+};
+
+
+export const deleteItemSuccess = ( item ) => {
+    return {
+        type: actionTypes.DELETE_ITEM_SUCCESS,
+        curitem: item
+    };
+};
+
+export const deleteItemFail = ( error ) => {
+    return {
+        type: actionTypes.DELETE_ITEM_FAIL,
+        error: error
+    };
+};
+
+export const deleteItem = (itemid) => {
+    return dispatch => {
+        ItemService.deleteItem(itemid).then(
+            response => {
+                console.log(response.data)
+                dispatch(deleteItemSuccess(response.data));
+            },
+            error => {
+                dispatch(deleteItemFail(error));
+            }
+          );
+    };
+};

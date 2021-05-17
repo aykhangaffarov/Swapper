@@ -12,7 +12,13 @@ export {
     takeWhItems,
     returnWhItems,
     returnWhItemsFail,
-    returnWhItemsSuccess
+    returnWhItemsSuccess,
+    fetchAnItem,
+    fetchAnItemSuccess,
+    fetchAnItemFail,
+    deleteItem,
+    deleteItemFail,
+    deleteItemSuccess
 } from './items';
 
 export {

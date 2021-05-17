@@ -29,7 +29,7 @@ class MyItems extends Component{
             ff= (
                 this.props.myitems.map(item => (
                     <li class="list-group-item clearfix">
-                    <img class="img-responsive img-rounded" src="http://placehold.it/256/163a63" alt=""/>
+                    <img class="img-responsive img-rounded" src={item.url} alt=""/>
                     <h3 class="list-group-item-heading">
                         {item.name}
                     </h3>

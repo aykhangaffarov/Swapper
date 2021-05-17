@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import {withRouter} from "react-router-dom";
+import {Redirect, withRouter} from "react-router-dom";
 import './MyProductDetails.css';
 import { connect } from "react-redux";
 import Modal from '../../UI/Modal/Modal';
 import SwapModal from "../../components/SwapModal/SwapModal";
 import * as actions from '../../actions/index';
 import {history} from '../../helpers/history';
+import { Link } from 'react-router-dom';
+
 class MyProductDetails extends Component{
 
   state={
@@ -25,8 +27,36 @@ class MyProductDetails extends Component{
     this.props.onSendToWareHouse(this.props.item.id);
     history.push('/myitems');
   }
+
+  deleteItemHandler = () =>{
+    this.props.onDeleteItem(this.props.item.id);
+    history.push('/myitems');
+  }
     render(){
-      
+      let zz=
+      (<div>
+        <br/>
+        <h5 >Item has no requests</h5>
+      </div>
+      );
+      if(this.props.itemrequests.length>0){
+        zz=(
+          this.props.itemrequests.map(request => (
+            <div class="fb">
+            <div class="fb-top">
+                <p><b>Item Requests</b><span></span></p>
+            </div>
+            <img src="" height="100" width="100" alt="Image of woman"/>
+            <p class="fbinfo"><Link to={`/items/${request.swapItemId}`}><b>{request.swapItemName}</b></Link> <br/> <span>{request.swapUserName}</span></p>
+            <div class="button-block">
+                <div class="fbconfirm" onClick={() => {this.performRequestHandler(request.id)}}>Confirm</div>
+                <div class="fbdelete" onClick={() => {this.deleteRequestHandler(request.id)}}>Delete Request</div>
+            </div>
+            <hr/> 
+            </div>
+              ))
+        );
+      }
               return (
           <React.Fragment>
             <Modal show={this.state.show} modalClosed={this.purchaseCancelHandler}>
@@ -37,13 +67,13 @@ class MyProductDetails extends Component{
             <aside class="col-sm-5 border-right">
         <article class="gallery-wrap"> 
         <div class="img-big-wrap">
-          <div> <a href="#"><img src="https://lh3.googleusercontent.com/proxy/rDH_EY1-EYN9F8EaPboGOa5EtX3CDg8IqLelGp5oeFaZXtB2S2OVAXq0S2TRNRQuWD39M3LhG9tKag1pqAcZxjItz7aTp672C-7VkQ"/></a></div>
+          <div> <a href="#"><img src={this.props.item.url}/></a></div>
         </div> 
         <div class="img-small-wrap">
-          <div class="item-gallery"> <img src="https://lh3.googleusercontent.com/proxy/rDH_EY1-EYN9F8EaPboGOa5EtX3CDg8IqLelGp5oeFaZXtB2S2OVAXq0S2TRNRQuWD39M3LhG9tKag1pqAcZxjItz7aTp672C-7VkQ"/> </div>
-          <div class="item-gallery"> <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZHVjdHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80"/> </div>
-          <div class="item-gallery"> <img src="https://s9.postimg.org/tupxkvfj3/image.jpg"/> </div>
-          <div class="item-gallery"> <img src="https://s9.postimg.org/tupxkvfj3/image.jpg"/> </div>
+          <div class="item-gallery"> <img src={this.props.item.url}/> </div>
+          <div class="item-gallery"> <img src={this.props.item.url}/> </div>
+          <div class="item-gallery"> <img src={this.props.item.url}/> </div>
+          <div class="item-gallery"> <img src={this.props.item.url}/> </div>
         </div> 
         </article> 
             </aside>
@@ -64,26 +94,13 @@ class MyProductDetails extends Component{
           <dd>{this.props.item.username}</dd>
         </dl>  
           <hr/><button onClick={() => {this.sendToWhHandler()}} class="btn btn-lg btn-primary text-uppercase"> Send to WareHouse </button>
-          <button onClick={this.sendrequestHandler} class="btn btn-lg btn-outline-primary text-uppercase"> <i class="fas fa-shopping-cart"></i> Delete Item </button>
+          <button onClick={() => {this.deleteItemHandler()}} class="btn btn-lg btn-outline-primary text-uppercase"> <i class="fas fa-shopping-cart"></i> Delete Item </button>
         </article> 
             </aside> 
           </div> 
         </div> 
         <h1>Requests</h1>
-        {this.props.itemrequests.map(request => (
-                   <div class="fb">
-                   <div class="fb-top">
-                       <p><b>Item Requests</b><span></span></p>
-                   </div>
-                   <img src="https://s13.postimg.org/xgla0jo4n/image.jpg" height="100" width="100" alt="Image of woman"/>
-                   <p class="fbinfo"><b>{request.swapItemName}</b> <br/> <span>{request.swapUserName}</span></p>
-                   <div class="button-block">
-                       <div class="fbconfirm" onClick={() => {this.performRequestHandler(request.id)}}>Confirm</div>
-                       <div class="fbdelete" onClick={() => {this.deleteRequestHandler(request.id)}}>Delete Request</div>
-                   </div>
-                   <hr/> 
-                   </div>
-                     ))}
+        {zz}
         
 </React.Fragment>
         );
@@ -105,7 +122,8 @@ const mapDispatchToProps = dispatch => {
     onFetchRequests: (itemId) => dispatch( actions.fetchItemRequests(itemId) ),
     onPerformRequests: (requestId) => dispatch( actions.performItemRequests(requestId) ),
     onDeleteRequests: (requestId) => dispatch( actions.deleteItemRequests(requestId) ),
-    onSendToWareHouse: (itemId) => dispatch( actions.returnWhItems(itemId))
+    onSendToWareHouse: (itemId) => dispatch( actions.returnWhItems(itemId)),
+    onDeleteItem: (itemId) => dispatch( actions.deleteItem(itemId))
   };
 };
 export default connect(mapStateToProps,mapDispatchToProps)(MyProductDetails);
