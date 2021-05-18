@@ -28,7 +28,7 @@ class AddItem extends Component{
             fileName:"",
             progress: 0,
             message: "",
-            proxy:"http://localhost:8080"
+            proxy:"https://swapper-com.herokuapp.com"
           };
     }
     upload() {
